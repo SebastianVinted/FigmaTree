@@ -1,4 +1,4 @@
-figma.showUI(__html__, { width: 520, height: 520 });
+figma.showUI(__html__, { width: 320, height: 320 });
 
 function isVisible(node) {
     return "visible" in node ? node.visible : true;
