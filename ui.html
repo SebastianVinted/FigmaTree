@@ -1,0 +1,204 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <style>
+        :root {
+            --brand-teal: #449da9;
+            --brand-purple: #9999FF;
+            --brand-peach: #FFA580;
+
+            --bg: #ffffff;
+            --text: #0b0f10;
+            --muted: #5e6a6c;
+
+            --border3: #5A6566;
+
+            --code-bg: #0b0f10;
+            --radius: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 12px;
+            margin-top: 8px;
+            color: var(--text);
+            background: var(--bg);
+            font: 12px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+        }
+
+        .top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .title {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            height: 32px;
+            padding: 0 12px;
+            border-radius: 6px;
+            border: none;
+            background: #fff;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .btnPrimary {
+            border: 0;
+            color: #fff;
+            border-radius: 6px;
+            padding: 0 16px;
+            background-image:
+                linear-gradient(130deg, rgba(153, 153, 255, 1) 0%, rgba(68, 157, 169, 1) 100%),
+                linear-gradient(130deg, rgba(153, 153, 255, 1) 0%, rgba(255, 165, 128, 1) 100%);
+            background-repeat: no-repeat;
+            background-position: 0 0, 0 0;
+            background-size: 0% 100%, 100% 100%;
+        }
+
+        .btnPrimary:hover {
+            background-size: 100% 100%, 100% 100%;
+        }
+
+        .btnIcon {
+            width: 32px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btnIcon:hover {
+            background-color: rgba(212, 214, 213, .36);
+        }
+
+        .wrap {
+            position: relative;
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid rgba(168, 178, 179, .5);
+            background: var(--code-bg);
+        }
+
+        textarea {
+            width: 100%;
+            height: 432px;
+            resize: none;
+            border: 0;
+            outline: none;
+            padding: 12px;
+            background: transparent;
+            color: #fff;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .hint {
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        svg {
+            width: 16px;
+            height: 16px;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top">
+        <div class="title">Layer tree</div>
+        <div class="actions">
+            <button id="copy" class="btn btnIcon" type="button" title="Copy">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M13.25 8C14.7688 8 16 9.23122 16 10.75V20.25C16 21.7688 14.7688 23 13.25 23H3.75C2.23122 23 1 21.7688 1 20.25V10.75C1 9.23122 2.23122 8 3.75 8H13.25ZM3.75 9.5C3.05964 9.5 2.5 10.0596 2.5 10.75V20.25C2.5 20.9404 3.05964 21.5 3.75 21.5H13.25C13.9404 21.5 14.5 20.9404 14.5 20.25V10.75C14.5 10.0596 13.9404 9.5 13.25 9.5H3.75ZM20.25 1C21.7688 1 23 2.23122 23 3.75V12.75C23 14.2688 21.7688 15.5 20.25 15.5H18.5C18.0858 15.5 17.75 15.1642 17.75 14.75C17.75 14.3358 18.0858 14 18.5 14H20.25C20.9404 14 21.5 13.4404 21.5 12.75V3.75C21.5 3.05964 20.9404 2.5 20.25 2.5H11.25C10.5596 2.5 10 3.05964 10 3.75V5.25C10 5.66421 9.66421 6 9.25 6C8.83579 6 8.5 5.66421 8.5 5.25V3.75C8.5 2.23122 9.73122 1 11.25 1H20.25Z"
+                        fill="black" />
+                </svg>
+            </button>
+            <button id="preview" class="btn btnPrimary" type="button">Preview</button>
+
+        </div>
+    </div>
+
+    <div class="wrap">
+        <textarea id="out" spellcheck="false"></textarea>
+    </div>
+
+    <div class="hint">Select Component Instance and press Preview Button.</div>
+
+    <svg id="icon-check" viewBox="0 0 24 24" style="display:none" xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M18.4697 6.46973C18.7626 6.17683 19.2374 6.17683 19.5303 6.46973C19.8232 6.76262 19.8232 7.23738 19.5303 7.53027L9.53027 17.5303C9.23738 17.8232 8.76262 17.8232 8.46973 17.5303L4.46973 13.5303C4.17683 13.2374 4.17683 12.7626 4.46973 12.4697C4.76262 12.1768 5.23738 12.1768 5.53027 12.4697L9 15.9395L18.4697 6.46973Z"
+            fill="black" />
+    </svg>
+
+    <script>
+        const out = document.getElementById("out");
+        const copyBtn = document.getElementById("copy");
+        const previewBtn = document.getElementById("preview");
+        const closeBtn = document.getElementById("close");
+
+        // RECEIVE renders from plugin
+        window.onmessage = (event) => {
+            const msg = event.data && event.data.pluginMessage;
+            if (!msg) return;
+            if (msg.type === "render") out.value = msg.text || "";
+        };
+
+        // PREVIEW: ask plugin to re-render now
+        previewBtn.onclick = () => {
+            parent.postMessage({ pluginMessage: { type: "preview" } }, "*");
+        };
+
+        // COPY: try clipboard API, fallback to execCommand
+        copyBtn.onclick = async () => {
+            const text = out.value || "";
+
+            const original = copyBtn.innerHTML;
+            const checkSvg = document
+                .getElementById("icon-check")
+                .outerHTML.replace('style="display:none"', "");
+
+            const showCheck = () => {
+                copyBtn.innerHTML = checkSvg;
+                setTimeout(() => (copyBtn.innerHTML = original), 1200);
+            };
+
+            try {
+                await navigator.clipboard.writeText(text);
+                showCheck();
+            } catch (e) {
+                const ta = document.createElement("textarea");
+                ta.value = text;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand("copy");
+                document.body.removeChild(ta);
+                showCheck();
+            }
+        };
+    </script>
+</body>
+
+</html>
