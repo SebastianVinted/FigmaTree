@@ -1,8 +1,16 @@
 {
-  "name": "Figma Tree",
-  "id": "layer-tree-plain-english",
+  "name": "Component Figma Tree",
+  "id": "1595085579171873160",
   "api": "1.0.0",
   "main": "code.js",
   "ui": "ui.html",
-  "editorType": ["figma"]
+  "networkAccess": {
+    "allowedDomains": [
+      "none"
+    ]
+  },
+  "documentAccess": "dynamic-page",
+  "editorType": [
+    "figma"
+  ]
 }
